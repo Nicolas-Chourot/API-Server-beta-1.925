@@ -146,10 +146,13 @@ export default class Repository {
         let collectionFilter = new CollectionFilter(bindedDatas, params);
         return collectionFilter.get();
     }
-    get(id) {
+    get(id, dontBind = false) {
         for (let object of this.objects()) {
-            if (object.Id === id) {
-                return this.model.bindExtraData(object);
+            if (object.Id == id) {
+                if (dontBind)
+                    return object;
+                else
+                    return this.model.bindExtraData(object);
             }
         }
         return null;

@@ -170,7 +170,7 @@ export default class collectionFilter {
     }
     valueMatch(value, searchValue) {
         try {
-            let sv = '^' + searchValue.toLowerCase().replace(/\*/g, '.*') + '$';
+            let sv = '^' + searchValue.toString().toLowerCase().replace(/\*/g, '.*') + '$';
             let v = value.toString().replace(/(\r\n|\n|\r)/gm, "").toLowerCase();
             return new RegExp(sv).test(v);
         } catch (error) {

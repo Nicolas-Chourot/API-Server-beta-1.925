@@ -143,8 +143,13 @@ export default class Repository {
                 else
                     bindedDatas.push(this.model.bindExtraData(data));
             }
-        let collectionFilter = new CollectionFilter(bindedDatas, params);
-        return collectionFilter.get();
+        let collectionFilter = new CollectionFilter(bindedDatas, params, this.model);
+        if (collectionFilter.valid())
+            return collectionFilter.get();
+        else {
+            this.errorMessages = collectionFilter.errorMessages;
+            return null; 
+        }
     }
     get(id, dontBind = false) {
         for (let object of this.objects()) {

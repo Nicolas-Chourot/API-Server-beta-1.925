@@ -94,8 +94,8 @@ export const decomposePath = (url) => {
     let urlParts = path.split("/");
 
     if (urlParts[1] != undefined) {
-        model = urlParts[1];
-        controllerName = capitalizeFirstLetter(model) + 'Controller';
+        model = capitalizeFirstLetter(urlParts[1]);
+        controllerName = model + 'Controller';
     }
 
     if (!isAPI) {

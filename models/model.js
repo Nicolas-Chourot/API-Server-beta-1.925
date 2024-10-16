@@ -44,7 +44,9 @@ export default class Model {
                 case "email": return /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value);
                 case "url": return /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/.test(value);
                 case "zipcode": return /^[a-zA-Z][0-9]+[a-zA-Z]\s[0-9]+[a-zA-Z][0-9]+$/.test(value);
-                case "asset": return true; // todo verify if it's a blob
+                case "date": return true; // todo make some syntax check
+                case "array": return true; // todo make validity check
+                case "asset": return true; // todo make validity check
                 default: return false;
             }
         }

@@ -26,7 +26,7 @@ export default class RepositoryCachesManager {
     static startCachedRepositoriesCleaner() {
         // periodic cleaning of expired cached repository data
         setInterval(RepositoryCachesManager.flushExpired, repositoryCachesExpirationTime * 1000);
-        console.log(BgWhite + FgBlack, "[Periodic repositories data caches cleaning process started...]");
+        console.log(BgWhite + FgBlue, "[Periodic repositories data caches cleaning process started...]");
 
     }
     static clear(model) {
@@ -60,8 +60,8 @@ export default class RepositoryCachesManager {
     static flushExpired() {
         let now = utilities.nowInSeconds();
         for (let cache of repositoryCaches) {
-            if (cache.Expire_Time < now) {
-                console.log("Cached file data of " + cache.model + ".json expired");
+            if (cache.Expire_Time <= now) {
+                console.log(BgWhite + FgBlue, "Cached file data of " + cache.model + ".json expired");
             }
         }
         repositoryCaches = repositoryCaches.filter( cache => cache.Expire_Time > now);

@@ -5,9 +5,14 @@ let repositoryCachesExpirationTime = serverVariables.get("main.repository.CacheE
 
 // Repository file data models cache
 globalThis.repositoryCaches = [];
+global.cachedRepositoriesCleanerStarted = false;
 
 export default class RepositoryCachesManager {
     static add(model, data) {
+        if (!cachedRepositoriesCleanerStarted) {
+            cachedRepositoriesCleanerStarted = true;
+            RepositoryCachesManager.startCachedRepositoriesCleaner();
+        }
         if (model != "") {
             RepositoryCachesManager.clear(model);
             repositoryCaches.push({
@@ -15,8 +20,14 @@ export default class RepositoryCachesManager {
                 data,
                 Expire_Time: utilities.nowInSeconds() + repositoryCachesExpirationTime
             });
-            console.log(BgWhite+FgBlue, `[Data of ${model} repository has been cached]`);
+            console.log(BgWhite + FgBlue, `[Data of ${model} repository has been cached]`);
         }
+    }
+    static startCachedRepositoriesCleaner() {
+        // periodic cleaning of expired cached repository data
+        setInterval(RepositoryCachesManager.flushExpired, repositoryCachesExpirationTime * 1000);
+        console.log(BgWhite + FgBlack, "[Periodic repositories data caches cleaning process started...]");
+
     }
     static clear(model) {
         if (model != "") {
@@ -36,13 +47,13 @@ export default class RepositoryCachesManager {
                     if (cache.model == model) {
                         // renew cache
                         cache.Expire_Time = utilities.nowInSeconds() + repositoryCachesExpirationTime;
-                        console.log(BgWhite+FgBlue, `[${cache.model} data retreived from cache]`);
+                        console.log(BgWhite + FgBlue, `[${cache.model} data retreived from cache]`);
                         return cache.data;
                     }
                 }
             }
         } catch (error) {
-            console.log(BgWhite+FgRed, "[repository cache error!]", error);
+            console.log(BgWhite + FgRed, "[repository cache error!]", error);
         }
         return null;
     }
@@ -52,7 +63,7 @@ export default class RepositoryCachesManager {
         let now = utilities.nowInSeconds();
         for (let cache of repositoryCaches) {
             if (cache.Expire_Time < now) {
-                console.log(BgWhite+FgBlue, `[Cached ${cache.model} data expired]`);
+                console.log(BgWhite + FgBlue, `[Cached ${cache.model} data expired]`);
                 indexToDelete.push(index);
             }
             index++;
@@ -60,6 +71,3 @@ export default class RepositoryCachesManager {
         utilities.deleteByIndex(repositoryCaches, indexToDelete);
     }
 }
-// periodic cleaning of expired cached repository data
-setInterval(RepositoryCachesManager.flushExpired, repositoryCachesExpirationTime * 1000);
-console.log(BgWhite+FgBlack, "[Periodic repositories data caches cleaning process started...]");

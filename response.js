@@ -7,8 +7,9 @@
 import { log } from "./log.js";
 
 export default class Response {
-    constructor(res) {
-        this.res = res;
+    constructor(HttpContext) {
+        this.HttpContext = HttpContext;
+        this.res = HttpContext.res;
         this.errorContent = "";
     }
     status(number, errorMessage = '') {
@@ -39,14 +40,14 @@ export default class Response {
         this.res.writeHead(204, { 'ETag': ETag });
         this.end();
     }
-    JSON(jsonObj, ETag = "") {                         // ok status with content
+    JSON(obj, ETag = "") {                         // ok status with content
         if (ETag != "")
             this.res.writeHead(200, { 'content-type': 'application/json', 'ETag': ETag });
         else
             this.res.writeHead(200, { 'content-type': 'application/json' });
-        if (jsonObj != null) {
-            let content = JSON.stringify(jsonObj);
-            console.log(FgCyan+Bright, "Response payload -->", content.toString().substring(0, 127) + "...");
+        if (obj != null) {
+            let content = JSON.stringify(obj);
+            console.log(FgCyan+Bright, "Response payload -->", content.toString().substring(0, 75) + "...");
             return this.end(content);
         } else
             return this.end();

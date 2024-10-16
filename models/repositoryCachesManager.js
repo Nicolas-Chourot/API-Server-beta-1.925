@@ -47,7 +47,7 @@ export default class RepositoryCachesManager {
                     if (cache.model == model) {
                         // renew cache
                         cache.Expire_Time = utilities.nowInSeconds() + repositoryCachesExpirationTime;
-                        console.log(BgWhite + FgBlue, `[${cache.model} data retreived from cache]`);
+                        console.log(BgWhite + FgBlue, `[${cache.model} data retrieved from cache]`);
                         return cache.data;
                     }
                 }

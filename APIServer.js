@@ -1,6 +1,7 @@
 
 import * as serverVariables from "./serverVariables.js";
 import { createServer } from 'http';
+import * as os from "os";
 import process from 'process';
 import dateAndTime from 'date-and-time';
 import HttpContext from './httpContext.js';
@@ -48,7 +49,7 @@ export default class APIServer {
         console.log(FgGreen, "* Lionel-Groulx College             *");
         console.log(FgGreen, "* Release date: october 2024        *");
         console.log(FgGreen, "*************************************");
-        console.log(FgWhite + BgGreen, `HTTP Server running on port ${this.port}...`);
+        console.log(FgWhite + BgGreen, `HTTP Server running on ${os.hostname()} and listening port ${this.port}...`);
         this.showMemoryUsage();
     }
     showRequestInfo() {

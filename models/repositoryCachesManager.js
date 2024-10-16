@@ -58,16 +58,12 @@ export default class RepositoryCachesManager {
         return null;
     }
     static flushExpired() {
-        let indexToDelete = [];
-        let index = 0;
         let now = utilities.nowInSeconds();
         for (let cache of repositoryCaches) {
             if (cache.Expire_Time < now) {
-                console.log(BgWhite + FgBlue, `[Cached ${cache.model} data expired]`);
-                indexToDelete.push(index);
+                console.log("Cached file data of " + cache.model + ".json expired");
             }
-            index++;
         }
-        utilities.deleteByIndex(repositoryCaches, indexToDelete);
+        repositoryCaches = repositoryCaches.filter( cache => cache.Expire_Time > now);
     }
 }

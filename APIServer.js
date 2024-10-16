@@ -54,7 +54,7 @@ export default class APIServer {
     showRequestInfo() {
         let time = dateAndTime.format(new Date(), 'HH:mm:ss');
         console.log(FgGreen, '-------------------------', time, '-------------------------');
-        console.log(FgGreen + Bright, `Request from ${this.httpContext.host} --> [${this.httpContext.req.method}::${this.httpContext.req.url}]`);
+        console.log(FgGreen + Bright, `Request from ${this.httpContext.hostIp} --> [${this.httpContext.req.method}::${this.httpContext.req.url}]`);
         //console.log("User agent ", this.httpContext.req.headers["user-agent"]);
         //console.log("Host ", this.httpContext.hostIp.substring(0, 15), "::", this.httpContext.host);
         if (this.httpContext.payload)

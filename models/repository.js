@@ -4,8 +4,8 @@ import * as utilities from "../utilities.js";
 import CollectionFilter from "./collectionFilter.js";
 import RepositoryCachesManager from "./repositoryCachesManager.js";
 
-globalThis.jsonFilesPath = "jsonFiles";
-globalThis.repositoryEtags = {};
+global.jsonFilesPath = "jsonFiles";
+global.repositoryEtags = {};
 
 
 export default class Repository {

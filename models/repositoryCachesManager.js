@@ -4,7 +4,7 @@ import * as serverVariables from "../serverVariables.js";
 let repositoryCachesExpirationTime = serverVariables.get("main.repository.CacheExpirationTime");
 
 // Repository file data models cache
-globalThis.repositoryCaches = [];
+global.repositoryCaches = [];
 global.cachedRepositoriesCleanerStarted = false;
 
 export default class RepositoryCachesManager {

@@ -30,6 +30,11 @@ export default class Repository {
         this.ETag = uuidv1();
         repositoryEtags[this.objectsName] = this.ETag;
     }
+    static getETag(modelName) {
+        if (modelName in repositoryEtags)
+            return repositoryEtags[modelName];
+        else null;
+    }
     objects() {
         if (this.objectsList == null) this.read();
         return this.objectsList;

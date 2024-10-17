@@ -24,8 +24,7 @@ export default class HttpContext {
         this.host = (this.secure ? "https://" : "http://") + req.headers["host"];
         this.hostIp = req.headers['x-forwarded-for'] != undefined ? req.headers['x-forwarded-for'].substring(0,15) : (req.connection.remoteAddress == "::1" ? "localhost" : req.connection.remoteAddress.substring(0,15));
         this.isCacheable = this.path.isAPI && this.req.method == "GET" && this.path.id == undefined;
-        this.isWriteRequest = this.req.method == "POST" || this.req.method == "PUT" ||this.req.method == "DELETE";
-    }
+     }
     static get() { 
         return httpContext; 
     }
